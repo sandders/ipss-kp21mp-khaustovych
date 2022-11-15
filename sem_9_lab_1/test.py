@@ -17,7 +17,8 @@ class TestIndexes(unittest.TestCase):
 
     def tearDown(self):
         # Remove the directory after the test
-        shutil.rmtree(self.test_dir)
+        if path.exists(self.test_dir):
+            shutil.rmtree(self.test_dir)
 
     def index_search(self, index):
         index.build_index()
@@ -32,3 +33,18 @@ class TestIndexes(unittest.TestCase):
     def test_forvard_index(self):
         index = ForwardIndex(self.test_dir)
         self.index_search(index)
+
+    def index_search_bad_directory(self, index):
+        shutil.rmtree(self.test_dir)
+        index.build_index()
+        assert index.search('all') == []
+        assert index.search('was') == []
+        assert index.search('content') == []
+
+    def test_inverted_index_bad_directory(self):
+        index = InvertedIndex(self.test_dir)
+        self.index_search_bad_directory(index)
+
+    def test_forvard_index_bad_directory(self):
+        index = ForwardIndex(self.test_dir)
+        self.index_search_bad_directory(index)
