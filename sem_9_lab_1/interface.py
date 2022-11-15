@@ -24,7 +24,7 @@ def main_menue():
             case '2':
                 search_using_indexes()
             case '3':
-                pass
+                get_indexes_structure()
             case '4':
                 break
 
