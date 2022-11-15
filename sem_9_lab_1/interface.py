@@ -1,35 +1,60 @@
-forvard_index = None
-reversed_index = None
+from indexes import ForwardIndex, InvertedIndex
+from pprint import pprint
+
+FORWARD_INDEX = None
+INVERTED_INDEX = None
+
+def set_directory():
+    global FORWARD_INDEX, INVERTED_INDEX
+    ans = input('Enter derectory path where text files will be indexed \
+or skip to use default one "lab1/files" :')
+    FORWARD_INDEX = ForwardIndex(ans) if ans else ForwardIndex()
+    INVERTED_INDEX = InvertedIndex(ans) if ans else InvertedIndex()
 
 def build_indexes():
-    raise NotImplementedError()
+    if FORWARD_INDEX and INVERTED_INDEX:
+        FORWARD_INDEX.build_index()
+        INVERTED_INDEX.build_index()
+        print('\nIndexes built successfuly\n')
+    else:
+        print('\nIndex dirrectory not set\n')
+
 
 def search_using_indexes():
-    raise NotImplementedError()
+    if FORWARD_INDEX and INVERTED_INDEX:
+        ans = input('Enter searcj word: ')
+        pprint(f'Forward index search result: {FORWARD_INDEX.search(ans)}')
+        pprint(f'Inverted index search result: {INVERTED_INDEX.search(ans)}')
+    else:
+        print('\nIndex dirrectory not set\n')
 
 def get_indexes_structure():
-    raise NotImplementedError()
+    if FORWARD_INDEX and INVERTED_INDEX:
+        pprint(f'Forward index : {FORWARD_INDEX.index}')
+        pprint(f'Inverted index : {INVERTED_INDEX.index}')
+    else:
+        print('\nIndex dirrectory not set\n')
 
 def main_menue():
     while True:
-        print('Select options:')
-        print('1. Build indexes')
-        print('2. Search using indexes')
-        print('3. Get indexes structure')
-        print('4. Exit\n')
+        print('\nSelect options:')
+        print('1. Set dirrectory')
+        print('2. Build indexes')
+        print('3. Search using indexes')
+        print('4. Get indexes structure')
+        print('5. Exit\n')
         ans = input()
         match ans:
             case '1':
-                build_indexes()
+                set_directory()
             case '2':
-                search_using_indexes()
+                build_indexes()
             case '3':
-                get_indexes_structure()
+                search_using_indexes()
             case '4':
+                get_indexes_structure()
+            case '5':
                 break
-
-
-
 
 
 if __name__ == '__main__':
