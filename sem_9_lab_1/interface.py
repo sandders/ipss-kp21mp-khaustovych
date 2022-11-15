@@ -7,7 +7,7 @@ INVERTED_INDEX = None
 def set_directory():
     global FORWARD_INDEX, INVERTED_INDEX
     ans = input('Enter derectory path where text files will be indexed \
-or skip to use default one "lab1/files" :')
+or skip to use default one "sem_9_lab_1/files" :')
     FORWARD_INDEX = ForwardIndex(ans) if ans else ForwardIndex()
     INVERTED_INDEX = InvertedIndex(ans) if ans else InvertedIndex()
 
@@ -30,8 +30,10 @@ def search_using_indexes():
 
 def get_indexes_structure():
     if FORWARD_INDEX and INVERTED_INDEX:
-        pprint(f'Forward index : {FORWARD_INDEX.index}')
-        pprint(f'Inverted index : {INVERTED_INDEX.index}')
+        print('Forward index :')
+        pprint(FORWARD_INDEX.index)
+        pprint('\nInverted index :')
+        print(INVERTED_INDEX.index)
     else:
         print('\nIndex dirrectory not set\n')
 

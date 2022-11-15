@@ -3,7 +3,7 @@ from os import walk, path
 
 
 class Index(ABC):
-    def __init__(self, directory='lab1/files'):
+    def __init__(self, directory='sem_9_lab_1/files'):
         self.index = dict()
         self.directory = directory
 
@@ -33,6 +33,7 @@ class Index(ABC):
 class InvertedIndex(Index):
 
     def build_index(self):
+        self.index = dict()
         file_passes = self.get_file_passes()
         for file_pass in file_passes:
             words = self.get_words(file_pass)
@@ -52,6 +53,7 @@ class InvertedIndex(Index):
 class ForwardIndex(Index):
 
     def build_index(self):
+        self.index = dict()
         file_passes = self.get_file_passes()
         for file_pass in file_passes:
             self.index[file_pass] = self.get_words(file_pass)
