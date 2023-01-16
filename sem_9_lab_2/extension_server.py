@@ -27,6 +27,11 @@ class SearchServer:
         self.html = open('extension_client.html').read()
 
         # TODO: Your code here. Change this code to load any data you want to use!
+        self.files = textfiles_in_dir(DIRECTORY)
+        self.index = {}          # index is empty to start
+        self.file_titles = {}    # mapping of file names to article titles is empty to start
+        create_index(self.files, self.index, self.file_titles)
+
 
     # this is the server request callback function. You can't change its name or params!!!
     def handle_request(self, request):
@@ -46,7 +51,10 @@ class SearchServer:
             # right now we respond to a search request with an empty string.
             # TODO: Your code here. change this code to return the string version 
             # of a list of dicts. Use json.dumps(collection) to turn a list into a string
-            return ''
+            collection = []
+            for file in search(self.index, request.params['query']):
+                collection.append({'title': self.file_titles[file]})
+            return json.dumps(collection)
 
 
 def main():
