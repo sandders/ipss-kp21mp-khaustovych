@@ -20,7 +20,10 @@ def get_file_data(file_pass):
                 file_title = line
                 flag = False
             word_set.update([i.strip(string.punctuation).lower() for i in line.split()])
-        word_set.remove('')
+        try:
+            word_set.remove('')
+        except KeyError:
+            pass
     return word_set, file_title
 
 
@@ -121,9 +124,14 @@ def search(index, query):
     []
     """
     result = set()
+    flag = True
     for search_word in query.split():
         if index.get(search_word):
-            result.update(index[search_word])
+            if flag:
+                result.update(index[search_word])
+                flag = False
+            else:
+                result &= set(index[search_word])
     return list(result)
     """
     You implement this function.  Don't forget to remove the 'pass' statement above.
