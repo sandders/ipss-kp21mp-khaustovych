@@ -19,7 +19,8 @@ def common(list1, list2):
     >>> common(['a', 'a', 'b'], ['a', 'a', 'x'])
     ['a']
     """
-    pass
+    return list(set(list1) & set (list2)) # v1
+    # return [i for i in list1 if i in list2] # v2
     """
     You implement this function.  Don't forget to remove the 'pass' statement above.
     """
