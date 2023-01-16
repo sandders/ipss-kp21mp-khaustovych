@@ -10,6 +10,20 @@ import sys
 import string
 
 
+def get_file_data(file_pass):
+    word_set = set()
+    file_title = ''
+    with open(file_pass, "r") as file:
+        flag = True
+        for line in file:
+            if flag:
+                file_title = line
+                flag = False
+            word_set.update([i.strip(string.punctuation).lower() for i in line.split()])
+        word_set.remove('')
+    return word_set, file_title
+
+
 def create_index(filenames, index, file_titles):
     """
     This function is passed:
@@ -60,7 +74,13 @@ def create_index(filenames, index, file_titles):
     >>> file_titles
     {'test1.txt': 'File 1 Title'}
     """
-    pass
+    for filename in filenames:
+        words, file_titles[filename] = get_file_data(filename)
+        for word in words:
+            if index.get(word):
+                index[word].append(filename)
+            else:
+                index[word] = [filename]
     """
     You implement this function.  Don't forget to remove the 'pass' statement above.
     """
@@ -100,7 +120,11 @@ def search(index, query):
     >>> search(index, 'apple ball nope')
     []
     """
-    pass
+    result = set()
+    for search_word in query.split():
+        if index.get(search_word):
+            result.update(index[search_word])
+    return list(result)
     """
     You implement this function.  Don't forget to remove the 'pass' statement above.
     """
